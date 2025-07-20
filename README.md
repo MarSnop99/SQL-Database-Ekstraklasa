@@ -8,7 +8,6 @@ Poniższy diagram przedstawia architekturę bazy danych, w tym tabele, klucze g�
 
 ![Diagram Bazy Danych](https://github.com/MarSnop99/SQL-Database-Ekstraklasa/blob/main/Diagram%20bazy%20SQL.png?raw=true)
 
-*(Uwaga: Aby wstawić diagram, musisz najpierw wgrać plik z obrazkiem do repozytorium i nazwać go `diagram_bazy_danych.png`)*
 
 ---
 
