@@ -32,43 +32,42 @@ ORDER BY
 -- Cel: Obliczenie i wyświetlenie aktualnej tabeli ligowej z punktami, bilansem
 --      zwycięstw, remisów, porażek oraz bilansem bramek.
 -- Technika: Użycie CTE i UNION ALL do zsumowania wyników z perspektywy gospodarzy i gości.
+-- UWAGA: Konwersja (CAST) wyników z typu tekstowego na liczbowy.
 --------------------------------------------------------------------------------
 WITH WynikiMeczow AS (
     -- Wyniki z perspektywy gospodarzy
     SELECT
-        gosp.Druzyna_ID,
+        m.Gospodarze_ID AS Druzyna_ID,
         1 AS LiczbaMeczow,
         CASE 
-            WHEN m.Wynik_Gospodarze > m.Wynik_Goscie THEN 3 
-            WHEN m.Wynik_Gospodarze = m.Wynik_Goscie THEN 1 
+            WHEN CAST(m.Wynik_Gospodarze AS INT) > CAST(m.Wynik_Goscie AS INT) THEN 3 
+            WHEN CAST(m.Wynik_Gospodarze AS INT) = CAST(m.Wynik_Goscie AS INT) THEN 1 
             ELSE 0 
         END AS Punkty,
-        CASE WHEN m.Wynik_Gospodarze > m.Wynik_Goscie THEN 1 ELSE 0 END AS Zwyciestwa,
-        CASE WHEN m.Wynik_Gospodarze = m.Wynik_Goscie THEN 1 ELSE 0 END AS Remisy,
-        CASE WHEN m.Wynik_Gospodarze < m.Wynik_Goscie THEN 1 ELSE 0 END AS Porazki,
-        m.Wynik_Gospodarze AS BramkiZdobyte,
-        m.Wynik_Goscie AS BramkiStracone
+        CASE WHEN CAST(m.Wynik_Gospodarze AS INT) > CAST(m.Wynik_Goscie AS INT) THEN 1 ELSE 0 END AS Zwyciestwa,
+        CASE WHEN CAST(m.Wynik_Gospodarze AS INT) = CAST(m.Wynik_Goscie AS INT) THEN 1 ELSE 0 END AS Remisy,
+        CASE WHEN CAST(m.Wynik_Gospodarze AS INT) < CAST(m.Wynik_Goscie AS INT) THEN 1 ELSE 0 END AS Porazki,
+        CAST(m.Wynik_Gospodarze AS INT) AS BramkiZdobyte,
+        CAST(m.Wynik_Goscie AS INT) AS BramkiStracone
     FROM Mecz m
-    JOIN Gospodarze gosp ON m.Gospodarze_ID = gosp.Gospodarze_ID
 
     UNION ALL
     
     -- Wyniki z perspektywy gości
     SELECT
-        gosc.Druzyna_ID,
+        m.Goscie_ID AS Druzyna_ID,
         1 AS LiczbaMeczow,
         CASE 
-            WHEN m.Wynik_Goscie > m.Wynik_Gospodarze THEN 3 
-            WHEN m.Wynik_Goscie = m.Wynik_Gospodarze THEN 1 
+            WHEN CAST(m.Wynik_Goscie AS INT) > CAST(m.Wynik_Gospodarze AS INT) THEN 3 
+            WHEN CAST(m.Wynik_Goscie AS INT) = CAST(m.Wynik_Gospodarze AS INT) THEN 1 
             ELSE 0 
         END AS Punkty,
-        CASE WHEN m.Wynik_Goscie > m.Wynik_Gospodarze THEN 1 ELSE 0 END AS Zwyciestwa,
-        CASE WHEN m.Wynik_Goscie = m.Wynik_Gospodarze THEN 1 ELSE 0 END AS Remisy,
-        CASE WHEN m.Wynik_Goscie < m.Wynik_Gospodarze THEN 1 ELSE 0 END AS Porazki,
-        m.Wynik_Goscie AS BramkiZdobyte,
-        m.Wynik_Gospodarze AS BramkiStracone
+        CASE WHEN CAST(m.Wynik_Goscie AS INT) > CAST(m.Wynik_Gospodarze AS INT) THEN 1 ELSE 0 END AS Zwyciestwa,
+        CASE WHEN CAST(m.Wynik_Goscie AS INT) = CAST(m.Wynik_Gospodarze AS INT) THEN 1 ELSE 0 END AS Remisy,
+        CASE WHEN CAST(m.Wynik_Goscie AS INT) < CAST(m.Wynik_Gospodarze AS INT) THEN 1 ELSE 0 END AS Porazki,
+        CAST(m.Wynik_Goscie AS INT) AS BramkiZdobyte,
+        CAST(m.Wynik_Gospodarze AS INT) AS BramkiStracone
     FROM Mecz m
-    JOIN Goscie gosc ON m.Goscie_ID = gosc.Goscie_ID
 )
 SELECT 
     d.Nazwa_Druzyny AS Drużyna,
@@ -88,7 +87,6 @@ GROUP BY
     d.Nazwa_Druzyny
 ORDER BY 
     Punkty DESC, Bilans DESC;
-
 
 -- Zapytanie 3: Najostrzejsi sędziowie w lidze
 -- Cel: Ranking sędziów na podstawie łącznej liczby pokazanych kartek, z podziałem na kolory.
@@ -146,5 +144,6 @@ GROUP BY
     z.Imie_i_Nazwisko, d.Nazwa_Druzyny
 ORDER BY 
     SumaAsyst DESC;
+
 
 
