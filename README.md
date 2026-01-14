@@ -1,39 +1,37 @@
+# SQL Relational Database Project - Football Statistics
 
-# Projekt Relacyjnej Bazy Danych SQL - Statystyki Piłkarskie
+A project developed as part of Economic Analytics studies, demonstrating the ability to design complex, normalized database schemas and execute advanced analytical SQL queries.
 
-Projekt zrealizowany w ramach studiów na kierunku Analityka Gospodarcza, demonstrujący umiejętność projektowania złożonych, znormalizowanych schematów baz danych oraz pisania zaawansowanych zapytań analitycznych w języku SQL.
-
-## Diagram ERD (Entity-Relationship Diagram)
-Poniższy diagram przedstawia architekturę bazy danych, w tym tabele, klucze główne, klucze obce oraz relacje między nimi.
+## ERD (Entity-Relationship Diagram)
+The diagram below illustrates the database architecture, including tables, primary keys, foreign keys, and the relationships between them.
 
 ![Diagram Bazy Danych](https://github.com/MarSnop99/SQL-Database-Ekstraklasa/blob/main/Diagram%20bazy%20SQL.png?raw=true)
 
+---
+
+## 1. Project Objective
+The goal of the project was to create a fully functional, normalized database for a fictional football league. The system was designed to enable efficient collection, management, and analysis of detailed match data, including scores, player statistics (goals, assists, cards), as well as team, referee, and stadium information.
 
 ---
 
-## 1. Cel Biznesowy Projektu
-Celem projektu było stworzenie w pełni funkcjonalnej, znormalizowanej bazy danych dla fikcyjnej ligi piłkarskiej. System został zaprojektowany tak, aby umożliwiać efektywne gromadzenie, zarządzanie i analizowanie szczegółowych danych dotyczących meczów, w tym wyników, statystyk zawodników (bramki, asysty, kartki), informacji o drużynach, sędziach i stadionach.
+## 2. Architecture and Schema Design
+The database was designed with a focus on data integrity and performance, adhering to normalization principles.
+
+*   **Normalization:** The schema was designed in **Third Normal Form (3NF)** to eliminate data redundancy and prevent modification anomalies. An example of this is the use of a single `Team` table instead of separate tables for home and away teams.
+*   **Relationships:** The model utilizes complex relationships, including **one-to-many** (e.g., `Team` to `Player`) and **many-to-many**, as seen in the `Match` table, which connects multiple entities (teams, referee, stadium).
+*   **Data Integrity:** Constraints such as `PRIMARY KEY`, `FOREIGN KEY`, `NOT NULL`, `UNIQUE`, and `CHECK` were implemented to ensure the consistency, correctness, and business logic of the stored data.
 
 ---
 
-## 2. Architektura i Projekt Schematu
-Baza danych została zaprojektowana z naciskiem na integralność i wydajność, zgodnie z zasadami normalizacji.
+## 3. Repository Structure
+The repository contains three main SQL scripts that allow for the recreation and testing of the entire database:
 
-*   **Normalizacja:** Schemat został zaprojektowany w **trzeciej formie normalnej (3NF)**, aby wyeliminować redundancję danych i zapobiec anomaliom podczas ich modyfikacji. Przykładem jest użycie jednej tabeli `Drużyna` zamiast oddzielnych tabel dla gospodarzy i gości.
-*   **Relacje:** Model wykorzystuje złożone relacje, w tym **jeden-do-wielu** (np. `Drużyna` do `Zawodnik`) oraz **wiele-do-wielu**, co widać w tabeli `Mecz`, która łączy wiele encji (drużyny, sędzia, stadion).
-*   **Integralność Danych:** Zastosowano ograniczenia (`constraints`) takie jak `PRIMARY KEY`, `FOREIGN KEY`, `NOT NULL`, `UNIQUE` oraz `CHECK` w celu zapewnienia spójności, poprawności i logiki biznesowej przechowywanych danych.
-
----
-
-## 3. Struktura Repozytorium
-Repozytorium zawiera trzy główne skrypty SQL, które pozwalają na odtworzenie i przetestowanie całej bazy danych:
-
-*   **`1_schema.sql`**: Skrypt zawiera wszystkie instrukcje `CREATE TABLE` oraz `ALTER TABLE`, które budują kompletną, pustą strukturę bazy danych z wszystkimi relacjami i ograniczeniami.
-*   **`2_data_insertion.sql`**: Skrypt wypełnia stworzone tabele przykładowymi danymi (`INSERT INTO`), co umożliwia przeprowadzanie testów i zapytań analitycznych.
-*   **`3_analytical_queries.sql`**: Skrypt zawiera kolekcję przykładowych zapytań `SELECT`, które demonstrują, jak można wykorzystać bazę do uzyskania wartościowych insightów (np. rankingi strzelców, statystyki sędziów, analiza wyników).
+*   **`1_schema.sql`**: Contains all `CREATE TABLE` and `ALTER TABLE` statements that build the complete, empty database structure with all relationships and constraints.
+*   **`2_data_insertion.sql`**: Populates the created tables with sample data (`INSERT INTO`), enabling testing and analytical queries.
+*   **`3_analytical_queries.sql`**: Contains a collection of sample `SELECT` queries demonstrating how the database can be used to derive valuable insights (e.g., top scorer rankings, referee statistics, match result analysis).
 
 ---
 
-## 4. Użyte Technologie
-*   **Język:** SQL (dialekt: T-SQL / MS SQL Server)
-*   **Narzędzia:** Microsoft SQL Server Management Studio
+## 4. Technologies Used
+*   **Language:** SQL (Dialect: T-SQL / MS SQL Server)
+*   **Tools:** Microsoft SQL Server Management Studio
